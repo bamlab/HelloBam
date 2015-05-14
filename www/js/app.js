@@ -21,18 +21,21 @@ angular.module('starter', ['ionic'])
 .controller('homeController', function($ionicPlatform, $scope, $timeout) {
 
     $ionicPlatform.ready(function() {
-        estimote.beacons.startRangingBeaconsInRegion(
-            {}, // Empty region matches all beacons.
-            function(result) {
-                console.log('*** Beacons ranged ***');
+
+        estimote.beacons.startMonitoringForRegion({identifier: "EstimoteSampleRegion", uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"},
+            function(){
+                console.log('yay')
                 $timeout(function(){
-                    $scope.estimotes = result.beacons;
-                    estimote.printObject(result.beacons);
+                    $scope.region = 'Yay';
                 });
             },
-            function(errorMessage) {
-              console.log('Ranging error: ' + errorMessage);
+            function(){
+                console.log('nooooooooo')
+                $timeout(function(){
+                    $scope.region = 'Noooooooo';
+                });
             }
+
         );
     });
 });
