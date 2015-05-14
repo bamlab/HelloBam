@@ -21,18 +21,25 @@ angular.module('starter', ['ionic'])
 .controller('homeController', function($ionicPlatform, $scope, $timeout) {
 
     $ionicPlatform.ready(function() {
+        $scope.inside = false;
         estimote.beacons.startRangingBeaconsInRegion(
             {}, // Empty region matches all beacons.
             function(result) {
                 console.log('*** Beacons ranged ***');
                 $timeout(function(){
                     $scope.estimotes = result.beacons;
-                    estimote.printObject(result.beacons);
                 });
 
-                if (result.beacons[0].distance < 1) {
+                if (!$scope.inside && $scope.estimotes.length) {
                     cordova.plugins.notification.local.schedule({
                         text: 'Hello BAM',
+                        id: 1
+                    });
+                    $scope.inside = true;
+                } else if ($scope.inside && !$scope.estimotes.length) {
+                    $scope.inside = false
+                    cordova.plugins.notification.local.schedule({
+                        text: 'Goodbye BAM',
                         id: 1
                     });
                 }
