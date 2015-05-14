@@ -30,7 +30,7 @@ angular.module('starter', ['ionic'])
                     $scope.estimotes = result.beacons;
                 });
 
-                if (!$scope.inside && result.region.uuid == "b9407f30-f5f8-466e-aff9-25556b57fe6d") {
+                if (!$scope.inside && result.region.uuid == "b9407f30-f5f8-466e-aff9-25556b57fe6d" && result.beacons.length) {
                     cordova.plugins.notification.local.schedule({
                         text: 'Welcome to BAM!',
                         id: 1
