@@ -6,21 +6,33 @@
 angular.module('starter', ['ionic'])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-    estimote.beacons.startRangingBeaconsInRegion(
-        {}, // Empty region matches all beacons.
-        function(result) {
-          console.log('*** Beacons ranged ***')
-          estimote.printObject(result) },
-        function(errorMessage) {
-          console.log('Ranging error: ' + errorMessage) });
-  });
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if(window.cordova && window.cordova.plugins.Keyboard) {
+          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+        if(window.StatusBar) {
+          StatusBar.styleDefault();
+        }
+    });
 })
+
+.controller('homeController', function($ionicPlatform, $scope, $timeout) {
+
+    $ionicPlatform.ready(function() {
+        estimote.beacons.startRangingBeaconsInRegion(
+            {}, // Empty region matches all beacons.
+            function(result) {
+                console.log('*** Beacons ranged ***');
+                $timeout(function(){
+                    $scope.estimotes = result.beacons;
+                    estimote.printObject(result.beacons);
+                });
+            },
+            function(errorMessage) {
+              console.log('Ranging error: ' + errorMessage);
+            }
+        );
+    });
+});
