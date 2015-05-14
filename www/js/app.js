@@ -29,6 +29,13 @@ angular.module('starter', ['ionic'])
                     $scope.estimotes = result.beacons;
                     estimote.printObject(result.beacons);
                 });
+
+                if (result.beacons[0].distance < 1) {
+                    cordova.plugins.notification.local.schedule({
+                        text: 'Hello BAM',
+                        id: 1
+                    });
+                }
             },
             function(errorMessage) {
               console.log('Ranging error: ' + errorMessage);
