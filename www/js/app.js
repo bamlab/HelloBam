@@ -30,16 +30,16 @@ angular.module('starter', ['ionic'])
                     $scope.estimotes = result.beacons;
                 });
 
-                if (!$scope.inside && $scope.estimotes.length) {
+                if (!$scope.inside && result.region.uuid == "b9407f30-f5f8-466e-aff9-25556b57fe6d") {
                     cordova.plugins.notification.local.schedule({
-                        text: 'Hello BAM',
+                        text: 'Welcome to BAM!',
                         id: 1
                     });
                     $scope.inside = true;
-                } else if ($scope.inside && !$scope.estimotes.length) {
+                } else if ($scope.inside && !result.beacons.length) {
                     $scope.inside = false
                     cordova.plugins.notification.local.schedule({
-                        text: 'Goodbye BAM',
+                        text: 'BAM! See you soon!',
                         id: 1
                     });
                 }
