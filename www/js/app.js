@@ -15,5 +15,12 @@ angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    estimote.beacons.startRangingBeaconsInRegion(
+        {}, // Empty region matches all beacons.
+        function(result) {
+          console.log('*** Beacons ranged ***')
+          estimote.printObject(result) },
+        function(errorMessage) {
+          console.log('Ranging error: ' + errorMessage) });
   });
 })
