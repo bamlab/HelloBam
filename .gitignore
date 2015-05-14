@@ -6,3 +6,4 @@ platforms/
 plugins/
 resources/ios/
 resources/android/
+.DS_Store
