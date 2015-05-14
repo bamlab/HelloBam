@@ -6,9 +6,11 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var mocha = require('gulp-mocha');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  test: 'test/'
 };
 
 gulp.task('default', ['sass']);
@@ -49,4 +51,14 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+
+
+// run the mocha test
+gulp.task('test', function () {
+    return gulp
+        .src( [paths.test + '**/*.js'], {read: false})
+        .pipe(mocha({bail: false}))
+    ;
 });
